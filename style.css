@@ -1,0 +1,109 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #0b1d33, #050b14);
+  color: white;
+}
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  animation: fadeIn 1.2s ease;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  opacity: .7;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(79,172,254,.4);
+}
+
+.primary {
+  background: linear-gradient(90deg,#4facfe,#00f2fe);
+  color: black;
+}
+
+.discord {
+  border: 1px solid #5865F2;
+  color: white;
+}
+
+.discord svg {
+  width: 18px;
+  height: 18px;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.stats strong {
+  font-size: 22px;
+  display: block;
+}
+
+.products {
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 30px;
+}
+
+.card {
+  padding: 30px;
+  border-radius: 18px;
+  min-height: 160px;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,.6);
+}
+
+.red { background: linear-gradient(135deg,#6b0000,#120000); }
+.purple { background: linear-gradient(135deg,#3b1a5a,#120016); }
+.blue { background: linear-gradient(135deg,#123a6f,#020b18); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
