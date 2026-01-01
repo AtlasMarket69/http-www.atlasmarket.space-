@@ -1,0 +1,209 @@
+================================================================================
+                    MONEYMOTION PAYMENT INTEGRATION SETUP
+================================================================================
+
+OVERVIEW:
+This file contains the configuration needed to integrate MoneyMotion card 
+payments with AtlasMarket.
+
+================================================================================
+1. ENVIRONMENT VARIABLES
+================================================================================
+
+Add these to your .env file or set them as system environment variables:
+
+MONEYMOTION_API_KEY=your_api_key_here
+MONEYMOTION_WEBHOOK_SECRET=your_webhook_secret_here
+MONEYMOTION_PUBLIC_KEY=your_public_key_here (if needed for frontend)
+BASE_URL=http://localhost:3000 (change to your production domain)
+
+HOW TO GET THESE:
+1. Sign up at MoneyMotion (https://www.moneymotion.com)
+2. Navigate to API/Developer Settings
+3. Generate API Key and copy it
+4. Generate Webhook Secret and copy it
+5. Generate Public Key (if required for client-side tokenization)
+
+================================================================================
+2. WEBHOOK CONFIGURATION IN MONEYMOTION DASHBOARD
+================================================================================
+
+After obtaining credentials, configure webhooks in MoneyMotion:
+
+1. Go to: Dashboard → Settings → Webhooks
+2. Add Webhook Endpoint:
+   
+   URL: http://your-domain.com/api/webhook/moneymotion
+   
+   For local testing, use a tunnel service:
+   - ngrok: ngrok http 3000
+   - localtunnel: npx localtunnel --port 3000
+   - Then use: https://your-tunnel.ngrok.io/api/webhook/moneymotion
+
+3. Select events to subscribe to:
+   - payment.completed
+   - payment.confirmed
+   - payment.failed
+   - invoice.paid
+
+4. Copy the webhook secret and add to .env as MONEYMOTION_WEBHOOK_SECRET
+
+================================================================================
+3. PAYMENT FLOW
+================================================================================
+
+FRONTEND (user clicks "Buy"):
+  1. User clicks "Buy with Card" button
+  2. Frontend calls: POST /api/orders { product_id, currency, provider: 'moneymotion' }
+  3. Server creates invoice via MoneyMotion API
+  4. Server returns payment_url (hosted checkout page)
+  5. User redirected to payment_url
+  6. User enters card details on MoneyMotion hosted page
+  7. Payment processed
+
+BACKEND (webhook):
+  1. MoneyMotion sends webhook to /api/webhook/moneymotion
+  2. Server verifies signature using MONEYMOTION_WEBHOOK_SECRET
+  3. Server updates order status to 'paid'
+  4. Server generates delivery artifact (download token or license key)
+  5. Server decrements stock_quantity
+  6. User can now access download link or license key
+
+================================================================================
+4. TESTING
+================================================================================
+
+TEST CARD NUMBERS (MoneyMotion Sandbox):
+  Visa:       4111 1111 1111 1111
+  Mastercard: 5555 5555 5555 4444
+  Expiry:     Any future date (e.g., 12/25)
+  CVV:        Any 3 digits (e.g., 123)
+
+CURL TEST (Create Invoice):
+  curl -X POST http://localhost:3000/api/orders \
+    -H "Content-Type: application/json" \
+    -d '{
+      "product_id": 1,
+      "currency": "USD",
+      "provider": "moneymotion"
+    }'
+
+Expected response:
+  {
+    "success": true,
+    "order_id": "ORD-1735689600000-12345",
+    "payment_url": "https://checkout.moneymotion.com/invoice/..."
+  }
+
+CURL TEST (Simulate Webhook):
+  curl -X POST http://localhost:3000/api/webhook/moneymotion \
+    -H "Content-Type: application/json" \
+    -H "X-Signature: <your_computed_hmac_sha256>" \
+    -d '{
+      "event": "payment.confirmed",
+      "order_id": "ORD-1735689600000-12345",
+      "status": "confirmed",
+      "amount": 29.99,
+      "currency": "USD"
+    }'
+
+NOTE: Signature header must be HMAC-SHA256 of request body using MONEYMOTION_WEBHOOK_SECRET
+
+================================================================================
+5. ADMIN DASHBOARD
+================================================================================
+
+Orders are visible in Admin Dashboard > Invoices / Orders section:
+- Order ID
+- Product name
+- Amount and currency
+- Status (pending, paid, delivered)
+- Created date
+- Direct download/license key link (if paid)
+
+To view: http://localhost:3000/admin-dashboard.html
+Admin credentials: 
+  Username: Atlas
+  Password: Atlas 99
+  Admin Secret: atlas-secret
+
+================================================================================
+6. ENVIRONMENT FILE TEMPLATE (.env)
+================================================================================
+
+# MoneyMotion Configuration
+MONEYMOTION_API_KEY=sk_test_xxxxxxxxxxxxx
+MONEYMOTION_WEBHOOK_SECRET=webhook_secret_xxxxxxxxxxxxx
+MONEYMOTION_PUBLIC_KEY=pk_test_xxxxxxxxxxxxx
+
+# Server Configuration
+BASE_URL=http://localhost:3000
+PORT=3000
+
+# Database (already configured, do not change)
+DB_HOST=j5da91anmp.qm2ovfd5ps.tsdb.cloud.timescale.com
+DB_PORT=33040
+DB_NAME=tsdb
+DB_USER=tsdbadmin
+DB_PASSWORD=k98um5eml8twr66n
+
+# Admin
+ADMIN_SECRET=atlas-secret
+ADMIN_USER=Atlas
+
+# Download Token TTL (seconds)
+DOWNLOAD_TOKEN_TTL_SECONDS=3600
+
+================================================================================
+7. TROUBLESHOOTING
+================================================================================
+
+Problem: "Payment provider configured" error
+  Solution: Check MONEYMOTION_API_KEY is set in environment
+
+Problem: Webhook signature verification fails
+  Solution: 
+    1. Confirm MONEYMOTION_WEBHOOK_SECRET is correct
+    2. Verify signature computation matches MoneyMotion's spec
+    3. Check server logs for signature mismatch details
+
+Problem: Order status stays "pending" after payment
+  Solution:
+    1. Check webhook is being called (server logs)
+    2. Verify webhook endpoint is accessible from internet (use ngrok for local)
+    3. Check MoneyMotion webhook delivery logs in dashboard
+
+Problem: Stock not decremented after purchase
+  Solution: Ensure order status transitions to "paid" first
+
+================================================================================
+8. PRODUCTION CHECKLIST
+================================================================================
+
+Before going live with MoneyMotion:
+
+[ ] Switch MoneyMotion to live/production API keys
+[ ] Set BASE_URL to your production domain
+[ ] Update webhook endpoint to production URL (remove ngrok/localhost)
+[ ] Test full payment flow with real card (contact MoneyMotion for test cards)
+[ ] Verify webhook signature verification is enabled
+[ ] Set DOWNLOAD_TOKEN_TTL_SECONDS appropriately (3600 = 1 hour)
+[ ] Enable HTTPS on all endpoints
+[ ] Test order tracking and admin dashboard
+[ ] Backup database credentials securely
+[ ] Monitor webhook delivery logs regularly
+[ ] Test refund flow (if supported by MoneyMontion)
+
+================================================================================
+9. SUPPORT
+================================================================================
+
+MoneyMotion API Docs: https://docs.moneymotion.com
+MoneyMotion Support: support@moneymotion.com
+Your webhook logs: MoneyMotion Dashboard → Logs → Webhooks
+
+For technical support on this integration, check server logs:
+  cd c:\Users\hi\Downloads\site
+  npm start (watch terminal for error messages)
+
+================================================================================

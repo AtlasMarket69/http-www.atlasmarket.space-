@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vouches - AtlasMarket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-background"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">AtlasMarket</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="discord.html">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="vouches.html" class="active">Vouches</a></li>
+                <li><a href="login.html" class="btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        <section class="section">
+            <div class="vouches-container">
+                <div class="vouches-header">
+                    <h1>Vouches</h1>
+                    <button id="createVouchBtn" class="btn btn-primary">Leave a Vouch</button>
+                </div>
+
+                <div id="vouchForm" class="vouch-form-card" style="display: none;">
+                    <h2>Create Vouch</h2>
+                    <form id="newVouchForm">
+                        <div class="form-group">
+                            <label for="vouchProduct">Product</label>
+                            <select id="vouchProduct" required>
+                                <option value="">Select a product</option>
+                                <option value="Fortnite | Ultimate">Fortnite | Ultimate</option>
+                                <option value="BO7 | Comm External">BO7 | Comm External</option>
+                                <option value="BO7 | Alpha External">BO7 | Alpha External</option>
+                                <option value="Arc Raiders | External">Arc Raiders | External</option>
+                                <option value="Temp Spoofer">Temp Spoofer</option>
+                                <option value="Cxrbon | CS2 External">Cxrbon | CS2 External</option>
+                                <option value="FiveM | External">FiveM | External</option>
+                                <option value="Fortnite Gen | Lifetime">Fortnite Gen | Lifetime</option>
+                                <option value="Phone Verified Steams">Phone Verified Steams</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vouchRating">Rating</label>
+                            <select id="vouchRating" required>
+                                <option value="">Select rating</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vouchComment">Comment</label>
+                            <textarea id="vouchComment" rows="4" required maxlength="500"></textarea>
+                            <small id="charCount">0/500 characters</small>
+                        </div>
+                        
+                        <div id="vouchError" class="error-message" style="display: none;"></div>
+                        <div id="vouchSuccess" class="success-message" style="display: none;"></div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Submit Vouch</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelVouch()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="vouchesList" class="vouches-grid">
+                    <p class="loading">Loading vouches...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let isAuthenticated = false;
+
+        // Check authentication
+        fetch('/api/session', {
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(data => {
+            isAuthenticated = data.authenticated;
+            if (!isAuthenticated) {
+                document.getElementById('createVouchBtn').textContent = 'Login to Leave a Vouch';
+                document.getElementById('createVouchBtn').onclick = () => {
+                    window.location.href = 'login.html';
+                };
+            } else {
+                document.getElementById('createVouchBtn').onclick = () => {
+                    document.getElementById('vouchForm').style.display = 'block';
+                    document.getElementById('createVouchBtn').style.display = 'none';
+                };
+            }
+            loadVouches();
+        })
+        .catch(() => {
+            document.getElementById('vouchesList').innerHTML = '<p class="error">Connection error. Please make sure the server is running.</p>';
+        });
+
+        function loadVouches() {
+            fetch('/api/vouches', {
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(vouches => {
+                const container = document.getElementById('vouchesList');
+                if (vouches.length === 0) {
+                    container.innerHTML = '<p>No vouches yet. Be the first to leave one!</p>';
+                    return;
+                }
+
+                container.innerHTML = vouches.map(vouch => `
+                    <div class="vouch-card">
+                        <div class="vouch-card-header">
+                            <div>
+                                <strong>${vouch.username}</strong>
+                                <div class="vouch-rating">${'★'.repeat(vouch.rating)}${'☆'.repeat(5 - vouch.rating)}</div>
+                            </div>
+                            <span class="vouch-product">${vouch.product}</span>
+                        </div>
+                        <p class="vouch-comment">${vouch.comment}</p>
+                        <small class="vouch-date">${new Date(vouch.created_at).toLocaleDateString()}</small>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function cancelVouch() {
+            document.getElementById('vouchForm').style.display = 'none';
+            document.getElementById('createVouchBtn').style.display = 'block';
+            document.getElementById('newVouchForm').reset();
+            document.getElementById('charCount').textContent = '0/500 characters';
+        }
+
+        document.getElementById('vouchComment').addEventListener('input', (e) => {
+            document.getElementById('charCount').textContent = `${e.target.value.length}/500 characters`;
+        });
+
+        document.getElementById('newVouchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!isAuthenticated) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const product = document.getElementById('vouchProduct').value;
+            const rating = parseInt(document.getElementById('vouchRating').value);
+            const comment = document.getElementById('vouchComment').value;
+
+            const errorMsg = document.getElementById('vouchError');
+            const successMsg = document.getElementById('vouchSuccess');
+            
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/vouches', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ product, rating, comment })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    successMsg.textContent = data.message;
+                    successMsg.style.display = 'block';
+                    cancelVouch();
+                    loadVouches();
+                } else {
+                    errorMsg.textContent = data.error || 'Failed to create vouch';
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = 'Connection error. Please make sure the server is running.';
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+
+</body>
+</html>
+

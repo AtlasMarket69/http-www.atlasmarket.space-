@@ -1,42 +1,331 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Your Brand</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtlasMarket - Home</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="grid-background"></div>
+    <div class="cursor-circle"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">AtlasMarket</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="discord.html">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="vouches.html">Vouches</a></li>
+                <li><a href="login.html" class="btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<header class="hero">
-  <h1>HQ accounts, trusted support,<br>daily rewards</h1>
-  <p>Your go-to hub for all your needs</p>
+    <div class="hero">
+        <h1>Welcome to AtlasMarket</h1>
+        <p>Premium products and services designed for excellence. Experience quality like never before.</p>
+        <div class="hero-buttons">
+            <a href="products.html" class="btn btn-primary"><span>Explore Products</span></a>
+            <a href="discord.html" class="btn btn-secondary"><span>Join Discord</span></a>
+        </div>
+        <div class="marquee">
+            <div class="marquee-content">
+                <span>✨ New Products Available ✨</span>
+                <span>🔥 Limited Stock - Get Yours Now 🔥</span>
+                <span>💎 Premium Quality Guaranteed 💎</span>
+                <span>⭐ Trusted by Thousands ⭐</span>
+                <span>✨ New Products Available ✨</span>
+                <span>🔥 Limited Stock - Get Yours Now 🔥</span>
+                <span>💎 Premium Quality Guaranteed 💎</span>
+                <span>⭐ Trusted by Thousands ⭐</span>
+            </div>
+        </div>
+    </div>
 
-  <div class="hero-buttons">
-    <a class="btn primary">Get Started</a>
-    <a class="btn discord">
-      <svg viewBox="0 0 245 240"><path fill="white" d="M104.4 104.8c-5.7 0-10.2 5-10.2 11.1s4.5 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1zm36.2 0c-5.7 0-10.2 5-10.2 11.1s4.5 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/><path fill="white" d="M189.5 20h-134C24.7 20 20 24.6 20 30.3v134.3c0 5.7 4.7 10.3 10.5 10.3h113.3l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V30.3c0-5.7-4.7-10.3-10.4-10.3z"/></svg>
-      Join Discord
-    </a>
-  </div>
+    <main class="content">
+        <!-- Announcements Section -->
+        <section class="announcements-section" id="announcementsBanner" style="display: none;">
+            <div class="announcements-container"></div>
+        </section>
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Products Sold</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Support</div>
+            </div>
+        </section>
 
-  <div class="stats">
-    <div><strong>890</strong><span>Customers</span></div>
-    <div><strong>17,467</strong><span>Products Sold</span></div>
-    <div><strong>4.95</strong><span>Rating</span></div>
-  </div>
-</header>
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Instant Delivery</h3>
+                    <p>Keys sent automatically seconds after payment. No delays.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Secure Payments</h3>
+                    <p>Encrypted checkout. Your payment info is never stored.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Tested & Reliable</h3>
+                    <p>We test everything before listing. If it doesn't work, we don't sell it.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Regular Updates</h3>
+                    <p>Game patches? We patch too. Your stuff keeps working.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Latest Features</h3>
+                    <p>New features added regularly. Check the changelog for updates.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Real Support</h3>
+                    <p>Discord support that actually helps. We fix problems, not just respond.</p>
+                </div>
+            </div>
+        </section>
 
-<section class="products">
-  <h2>Products</h2>
+        <!-- Products Section -->
+        <section class="products-section">
+            <h2 class="section-title">All Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/FORNITE-ULTIMATE.jpg" alt="Fortnite | Ultimate"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Fortnite | Ultimate</h3>
+                        <p class="product-description">Premium Fortnite external solution with advanced features and undetected performance.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$3.99</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-fortnite-ultimate.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
 
-  <div class="grid">
-    <div class="card red">X-mas Mystery Box<br><span>$4.99</span></div>
-    <div class="card purple">Mail Access + Skin<br><span>$28 – $149</span></div>
-    <div class="card blue">Full Access Accounts<br><span>$11 – $94</span></div>
-  </div>
-</section>
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/COD-COMM-EXTERNAL-ATLAS.jpg" alt="BO7 | Comm External"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">BO7 | Comm External</h3>
+                        <p class="product-description">Black Ops 7 community external with comprehensive features and regular updates.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$3.99</div>
+                                <div class="product-stock low-stock">Low Stock</div>
+                            </div>
+                            <a href="buy-bo7-comm.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/COD-ALPHA-EXTERNAL-ATLAS.jpg" alt="BO7 | Alpha External"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">BO7 | Alpha External</h3>
+                        <p class="product-description">Advanced Black Ops 7 alpha external with cutting-edge features and superior performance.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$3.99</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-bo7-alpha.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/arc-reiders-atlas.jpg" alt="Arc Raiders | External"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Arc Raiders | External</h3>
+                        <p class="product-description">Professional Arc Raiders external solution with optimized performance and safety features.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$5.99</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-arc-raiders.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/temp.webp" alt="Temp Spoofer"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Temp Spoofer</h3>
+                        <p class="product-description">Temporary hardware spoofer with advanced protection and quick setup process.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$2.99</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-temp-spoofer.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/FiveN-external-Atlas.jpg" alt="FiveM | External"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">FiveM | External</h3>
+                        <p class="product-description">FiveM external solution with comprehensive features for enhanced gameplay experience.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$2.99</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-fivem.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/FORTNITE-ACCOUNT-GEN-ATLAS.jpg" alt="Fortnite Gen | Lifetime"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Fortnite Gen | Lifetime</h3>
+                        <p class="product-description">Lifetime Fortnite generator with unlimited access and premium support included.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$35.00</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-fortnite-gen.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><img src="bannerr/STEAM-GEN-ATLAS.jpg" alt="Phone Verified Steams"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Phone Verified Steams</h3>
+                        <p class="product-description">Phone verified Steam accounts with full access and instant delivery.</p>
+                        <div class="product-footer">
+                            <div class="product-info">
+                                <div class="product-price">$0.12</div>
+                                <div class="product-stock in-stock">In Stock</div>
+                            </div>
+                            <a href="buy-steam.html" class="btn"><span>Buy Now</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Absolutely amazing service! The quality exceeded my expectations and the support team was incredibly helpful."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <div class="author-name">John Doe</div>
+                            <div class="author-role">Verified Customer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Best purchase I've made this year. Fast delivery, great quality, and excellent value for money."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JS</div>
+                        <div class="author-info">
+                            <div class="author-name">Jane Smith</div>
+                            <div class="author-role">Premium Member</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Outstanding experience from start to finish. Highly recommend to anyone looking for quality products."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MJ</div>
+                        <div class="author-info">
+                            <div class="author-name">Mike Johnson</div>
+                            <div class="author-role">Business Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">AtlasMarket</h3>
+                <p class="footer-description">Premium products and services for everyone.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="tos.html">Terms of Service</a></li>
+                    <li><a href="guides.html">Guides</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-heading">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="discord.html">Discord</a></li>
+                    <li><a href="status.html">Status</a></li>
+                    <li><a href="vouches.html">Vouches</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-heading">Connect</h4>
+                <div class="footer-social">
+                    <a href="#" class="social-link">Discord</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AtlasMarket. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load announcements
+        fetch('/api/announcements')
+            .then(res => res.ok ? res.json() : [])
+            .then(anns => {
+                if (anns.length > 0) {
+                    const container = document.querySelector('.announcements-container');
+                    container.innerHTML = anns.map(a => `
+                        <div class="announcement-item">
+                            ${a.title ? '<strong>' + a.title + ':</strong>' : ''} ${a.message}
+                        </div>
+                    `).join('');
+                    document.getElementById('announcementsBanner').style.display = 'block';
+                }
+            })
+            .catch(e => console.log('Announcements unavailable'));
+    </script>
 </body>
 </html>

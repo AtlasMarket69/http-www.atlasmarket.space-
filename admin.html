@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - AtlasMarket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-background"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">AtlasMarket</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="discord.html">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="vouches.html">Vouches</a></li>
+                <li><a href="admin.html" class="btn active">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        <section class="section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>Login</h1>
+                    <p>Sign in to your account</p>
+                    
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="username">Username or Email</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        
+                        <div id="errorMessage" class="error-message" style="display: none;"></div>
+                        
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        
+                        <p class="auth-link">
+                            Don't have an account? <a href="register.html">Register here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Check if already logged in
+        fetch('/api/session', {
+            credentials: 'include'
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Network response was not ok');
+            return res.json();
+        })
+        .then(data => {
+            if (data.authenticated) {
+                window.location.href = 'account.html';
+            }
+        })
+        .catch(error => {
+            console.log('Session check failed (server may not be running):', error);
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.textContent = 'Please fill in all fields';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            const errorMsg = document.getElementById('errorMessage');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            errorMsg.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Wait a moment for session to be saved
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    
+                    // Verify session before redirecting
+                    const sessionCheck = await fetch('/api/session', {
+                        credentials: 'include'
+                    });
+                    
+                    if (sessionCheck.ok) {
+                        const sessionData = await sessionCheck.json();
+                        if (sessionData.authenticated) {
+                            window.location.href = 'account.html';
+                        } else {
+                            errorMsg.textContent = 'Session not created. Please try again.';
+                            errorMsg.style.display = 'block';
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = originalText;
+                        }
+                    } else {
+                        window.location.href = 'account.html';
+                    }
+                } else {
+                    let errorText = data.error || 'Login failed';
+                    if (data.details) {
+                        errorText += ' - ' + data.details;
+                    }
+                    errorMsg.textContent = errorText;
+                    errorMsg.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMsg.textContent = 'Connection error. Please make sure the server is running.';
+                errorMsg.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

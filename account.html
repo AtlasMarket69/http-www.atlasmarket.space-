@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Panel - AtlasMarket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-background"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">AtlasMarket</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="discord.html">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="vouches.html">Vouches</a></li>
+                <li><a href="account.html" class="btn active">Account</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        <section class="section">
+            <div class="account-container">
+                <div class="account-header">
+                    <h1>Account Panel</h1>
+                    <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                </div>
+
+                <div class="account-info-card">
+                    <h2>Account Information</h2>
+                    <div id="accountInfo" class="account-info">
+                        <p><strong>Username:</strong> <span id="username"></span></p>
+                        <p><strong>Email:</strong> <span id="email"></span></p>
+                        <p><strong>Member Since:</strong> <span id="createdAt"></span></p>
+                    </div>
+                </div>
+
+                <div class="account-section">
+                    <h2>My Vouches</h2>
+                    <div id="myVouches" class="vouches-list">
+                        <p class="loading">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Check authentication
+        fetch('/api/session', {
+            credentials: 'include'
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Session check failed');
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log('Session data:', data);
+            if (!data.authenticated) {
+                console.log('Not authenticated, redirecting to login');
+                window.location.href = 'login.html';
+                return;
+            }
+            console.log('Authenticated, loading account info');
+            loadAccountInfo();
+            loadMyVouches();
+        })
+        .catch(error => {
+            console.error('Session check error:', error);
+            // Don't show alert, just redirect to login
+            window.location.href = 'login.html';
+        });
+
+        function loadAccountInfo() {
+            fetch('/api/user', {
+                credentials: 'include'
+            })
+            .then(res => {
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error('Failed to fetch user info');
+                }
+                return res.json();
+            })
+            .then(user => {
+                if (user && user.username) {
+                    document.getElementById('username').textContent = user.username;
+                    document.getElementById('email').textContent = user.email;
+                    const date = new Date(user.created_at);
+                    document.getElementById('createdAt').textContent = date.toLocaleDateString();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading account info:', error);
+                document.getElementById('accountInfo').innerHTML = '<p style="color: #ef4444;">Error loading account information. Please refresh the page.</p>';
+            });
+        }
+
+        function loadMyVouches() {
+            fetch('/api/vouches/my', {
+                credentials: 'include'
+            })
+            .then(res => {
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error('Failed to fetch vouches');
+                }
+                return res.json();
+            })
+            .then(vouches => {
+                const container = document.getElementById('myVouches');
+                if (!vouches || vouches.length === 0) {
+                    container.innerHTML = '<p>You haven\'t left any vouches yet. <a href="vouches.html">Leave a vouch</a></p>';
+                    return;
+                }
+
+                container.innerHTML = vouches.map(vouch => `
+                    <div class="vouch-item">
+                        <div class="vouch-header">
+                            <div>
+                                <strong>${vouch.product}</strong>
+                                <div class="vouch-rating">${'★'.repeat(vouch.rating)}${'☆'.repeat(5 - vouch.rating)}</div>
+                            </div>
+                            <button class="btn-small btn-danger" onclick="deleteVouch(${vouch.id})">Delete</button>
+                        </div>
+                        <p>${vouch.comment}</p>
+                        <small>${new Date(vouch.created_at).toLocaleDateString()}</small>
+                    </div>
+                `).join('');
+            })
+            .catch(error => {
+                console.error('Error loading vouches:', error);
+                document.getElementById('myVouches').innerHTML = '<p style="color: #ef4444;">Error loading vouches. Please refresh the page.</p>';
+            });
+        }
+
+        function deleteVouch(id) {
+            if (!confirm('Are you sure you want to delete this vouch?')) return;
+
+            fetch(`/api/vouches/${id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    loadMyVouches();
+                } else {
+                    alert(data.error || 'Failed to delete vouch');
+                }
+            });
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            const response = await fetch('/api/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+            
+            if (response.ok) {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

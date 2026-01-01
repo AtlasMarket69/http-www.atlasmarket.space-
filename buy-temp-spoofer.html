@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy - Temp Spoofer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-background"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">AtlasMarket</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="discord.html">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="vouches.html">Vouches</a></li>
+                <li><a href="admin.html" class="btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="buy-page">
+            <div class="buy-product-image">
+                <img src="bannerr/temp.webp" alt="Temp Spoofer">
+            </div>
+            <div class="buy-product-info">
+                <h1 class="buy-product-title">Temp Spoofer</h1>
+                
+                <div class="duration-selector">
+                    <div class="duration-tabs">
+                        <a href="#" class="duration-tab active" data-duration="day" data-price="2.99">1 Day</a>
+                        <a href="#" class="duration-tab" data-duration="3days" data-price="6.99">3 Days</a>
+                        <a href="#" class="duration-tab" data-duration="15days" data-price="21.99">15 Days</a>
+                        <a href="#" class="duration-tab" data-duration="month" data-price="29.99">30 Days</a>
+                        <a href="#" class="duration-tab" data-duration="90days" data-price="63.99">90 Days</a>
+                    </div>
+                    <div class="price-display">
+                        <div class="buy-product-price" id="productPrice">$2.99</div>
+                        <div class="buy-product-stock in-stock">In Stock</div>
+                    </div>
+                </div>
+                
+                <p class="buy-product-description">Temporary hardware spoofer with advanced protection and quick setup process. Protect your identity instantly.</p>
+                
+                <button class="description-toggle-btn" onclick="toggleDescription()">
+                    <span>View Full Description</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                
+                <div class="product-full-description" id="productDescription" style="display: none;">
+                    <div class="description-section">
+                        <h3>✨ Features</h3>
+                        <ul class="description-list">
+                            <li>Works on 24h2</li>
+                            <li>Supports all motherboards</li>
+                            <li>Simple UI</li>
+                            <li>Has a trace blocker so you don't need to clean</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h3>🛡️ Anti-Cheat Support</h3>
+                        <ul class="description-list">
+                            <li>EAC</li>
+                            <li>Battle Eye</li>
+                            <li>Vanguard</li>
+                            <li>Face It</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="buy-features">
+                    <h3>Features:</h3>
+                    <ul>
+                        <li>Quick setup process</li>
+                        <li>Advanced protection system</li>
+                        <li>Temporary spoofing solution</li>
+                        <li>Easy to use interface</li>
+                        <li>Full hardware coverage</li>
+                    </ul>
+                </div>
+
+                <div class="buy-actions">
+                    <a href="#" class="btn btn-primary buy-btn" data-product-id="5" data-currency="USD"><span>Purchase Now</span></a>
+                    <a href="products.html" class="btn btn-secondary"><span>Back to Products</span></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

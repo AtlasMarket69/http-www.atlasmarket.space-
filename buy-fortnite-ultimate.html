@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy - Fortnite | Ultimate - AtlasMarket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-background"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">AtlasMarket</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="discord.html">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="vouches.html">Vouches</a></li>
+                <li><a href="admin.html" class="btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="buy-page">
+            <div class="buy-product-image">
+                <img src="bannerr/FORNITE-ULTIMATE.jpg" alt="Fortnite | Ultimate">
+            </div>
+            <div class="buy-product-info">
+                <h1 class="buy-product-title">Fortnite | Ultimate</h1>
+                
+                <div class="duration-selector">
+                    <div class="duration-tabs">
+                        <a href="#" class="duration-tab active" data-duration="day" data-price="3.99">1 Day</a>
+                        <a href="#" class="duration-tab" data-duration="week" data-price="15.99">7 Days</a>
+                        <a href="#" class="duration-tab" data-duration="month" data-price="39.99">30 Days</a>
+                    </div>
+                    <div class="price-display">
+                        <div class="buy-product-price" id="productPrice">$3.99</div>
+                        <div class="buy-product-stock in-stock">In Stock</div>
+                    </div>
+                </div>
+                
+                <p class="buy-product-description">Premium Fortnite external solution with advanced features and undetected performance. Experience the ultimate gaming advantage with our top-tier external solution.</p>
+                
+                <button class="description-toggle-btn" onclick="toggleDescription()">
+                    <span>View Full Description</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                
+                <div class="product-full-description" id="productDescription" style="display: none;">
+                    <div class="description-section">
+                        <h3>⚙️ System Information</h3>
+                        <ul class="description-list">
+                            <li>Windows 10 (all) Windows 11 [21h2-25h2]</li>
+                            <li>Intel or AMD cpu</li>
+                            <li>Any GPU</li>
+                            <li>Controller supported</li>
+                            <li>Tournament Ready</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h3>🎯 Aimbot</h3>
+                        <ul class="description-list">
+                            <li>Enable Aimbot</li>
+                            <li>SILENT AIM</li>
+                            <li>MEMORY AIM</li>
+                            <li>NO SPREAD</li>
+                            <li>Shoot Through Walls</li>
+                            <li>Enable FOV Arrow</li>
+                            <li>Aim Prediction</li>
+                            <li>Aim Randomize Aim</li>
+                            <li>Skip Knocked Player</li>
+                            <li>Disable Aim While Building</li>
+                            <li>Disable Aim While Pickaxe</li>
+                            <li>Enemy Visibility Check</li>
+                            <li>Aimbot FOV Size</li>
+                            <li>Aimbot Smoothness X</li>
+                            <li>Aimbot Smoothness Y</li>
+                            <li>Aim Distance</li>
+                            <li>Aim Key</li>
+                            <li>Aim Bone</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h3>👁️ Visuals</h3>
+                        <ul class="description-list">
+                            <li>Enable Player ESP</li>
+                            <li>Draw Distance</li>
+                            <li>Draw Weapon</li>
+                            <li>Draw Weapon Rarity</li>
+                            <li>Draw Outline</li>
+                            <li>Draw Name</li>
+                            <li>Draw Platform</li>
+                            <li>Draw Platform Icons</li>
+                            <li>Draw Kills ESP</li>
+                            <li>Draw Season Level</li>
+                            <li>Draw Rank</li>
+                            <li>Draw Rank Icons</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h3>🌍 World ESP</h3>
+                        <ul class="description-list">
+                            <li>Enable World ESP</li>
+                            <li>Show Vehicles</li>
+                            <li>Show Floppa Spawns</li>
+                            <li>Show Shield Sources</li>
+                            <li>Draw Snapline</li>
+                            <li>Show Distance</li>
+                            <li>Show Chests</li>
+                            <li>Show Ammo Boxes</li>
+                            <li>Show Ground & Other Loot</li>
+                            <li>Loot ESP Distance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h3>📡 Radar</h3>
+                        <ul class="description-list">
+                            <li>Enable Radar</li>
+                            <li>Enable Distance</li>
+                            <li>Enable Local Radar Point</li>
+                            <li>Radar Position</li>
+                            <li>Radar Size</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h3>⚙️ Misc</h3>
+                        <ul class="description-list">
+                            <li>V-Sync</li>
+                            <li>Stream Proof</li>
+                            <li>Speed Loop</li>
+                            <li>Speed LootSpeed</li>
+                            <li>Save Config</li>
+                            <li>Load Config</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="buy-features">
+                    <h3>Features:</h3>
+                    <ul>
+                        <li>Advanced ESP and aim assistance</li>
+                        <li>Undetected by anti-cheat systems</li>
+                        <li>Regular updates and support</li>
+                        <li>Easy to use interface</li>
+                        <li>24/7 customer support</li>
+                    </ul>
+                </div>
+
+                <div class="buy-actions">
+                    <a href="#" class="btn btn-primary buy-btn"><span>Purchase Now</span></a>
+                    <a href="products.html" class="btn btn-secondary"><span>Back to Products</span></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
